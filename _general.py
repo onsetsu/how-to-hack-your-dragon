@@ -8,7 +8,7 @@ Licensed under the LGPL, see http://www.gnu.org/licenses/
 """
 from natlink import setMicState
 from dragonfly import (
-    Clipboard,
+    # Clipboard,
     Choice,
     Pause,
     Window,
@@ -33,12 +33,12 @@ from dragonfly import (
 import win32con
 from dragonfly.actions.keyboard import Typeable, keyboard
 from dragonfly.actions.typeables import typeables
+
 if not 'Control_R' in typeables:
     keycode = win32con.VK_RCONTROL
     typeables["Control_R"] = Typeable(code=keycode, name="Control_R")
 if not 'semicolon' in typeables:
     typeables["semicolon"] = keyboard.get_typeable(char=';')
-
 
 import lib.sound as sound
 from lib.format import (
@@ -52,7 +52,6 @@ from lib.format import (
     format_text,
     FormatTypes as ft,
 )
-
 
 release = Key("shift:up, ctrl:up, alt:up")
 
@@ -76,7 +75,7 @@ def reload_natlink():
     """Reloads Natlink and custom Python modules."""
     win = Window.get_foreground()
     FocusWindow(executable="natspeak",
-        title="Messages from Python Macros").execute()
+                title="Messages from Python Macros").execute()
     Pause("10").execute()
     Key("a-f, r").execute()
     Pause("10").execute()
@@ -202,7 +201,6 @@ pressKeyMap.update(numberMap)
 pressKeyMap.update(controlKeyMap)
 pressKeyMap.update(functionKeyMap)
 
-
 formatMap = {
     "camel case": ft.camelCase,
     "pascal case": ft.pascalCase,
@@ -227,7 +225,6 @@ formatMap = {
     "say": ft.spokenForm,
     "environment variable": [ft.snakeCase, ft.upperCase],
 }
-
 
 abbreviationMap = {
     "administrator": "admin",
@@ -370,12 +367,44 @@ def paste_command():
     release.execute()
     Key("c-v/3").execute()
 
+
 print "Start _general.py"
 
 
 def hilda(args):
     print "Hallo Welt"
     print args
+
+
+from dragonfly.windows.clipboard import Clipboard
+
+
+def current_selection():
+    clipboard = Clipboard()
+    temp_text = clipboard.get_system_text()
+    Key('c-c/10').execute()
+    sel_text = clipboard.get_system_text()
+    clipboard.set_system_text(temp_text)
+    return sel_text
+
+
+def select_next(text=None, text2=None):
+    try:
+        target = '('
+        Key('cs-end').execute()
+        sel_text = current_selection()
+        idx = sel_text.find(target)
+        print 'sel:' + str(idx) + ':'
+        Key("left").execute()
+        if idx >= 0:
+            Key("right:%(i)d" % {"i": idx}).execute()
+        sound.play(sound.SND_ACTIVATE)
+    except StandardError as e:
+        print 'ERROR'+ e
+    else:
+        print 'SUCCESS!'
+    finally:
+        print 'END'
 
 
 grammarCfg = Config("multi edit")
@@ -387,15 +416,17 @@ grammarCfg.cmd.map = Item(
         "hash": Key("#"),
         "menu": Key("s-f10"),
 
-        "hoch [<n>]": Key("up:%(n)d"),
-        "ab [<n>]": Key("down:%(n)d"),
-        "rechts [<n>]": Key("right:%(n)d"),
-        "links [<n>]": Key("left:%(n)d"),
+        "(auf|hoch) [<n>]|[<n>] (auf|hoch)": Key("up:%(n)d"),
+        "(runter|ab) [<n>]|[<n>] (runter|ab)": Key("down:%(n)d"),
+        "rechts [<n>]|[<n>] rechts": Key("right:%(n)d"),
+        "links [<n>]|[<n>] links": Key("left:%(n)d"),
 
+        "pipe": Key("|"),
         "double": Key("\""),
         "single": Key("\'"),
 
         "copy": Key("c-c"),
+        "paste|Pest|Waste": Key("c-v"),
 
         # Undo support
         "undo [<n>]": Key("c-z:%(n)d"),
@@ -415,9 +446,9 @@ grammarCfg.cmd.map = Item(
         "Hans Wurst": Key("H"),
         "(next|new) line": Key("end, enter"),
 
-
-        "Hilda": Key("F")+Function(hilda),
+        "Hilda": Key("F") + Function(hilda),
         "Kommen|Kommend|comment": Key("c-slash"),
+        "Eintopf": Function(select_next),
 
         "anchor front": Key("s-home"),
         "anchor back": Key("s-end"),
@@ -521,10 +552,6 @@ grammarCfg.cmd.map = Item(
 )
 
 
-
-
-
-
 class KeystrokeRule(MappingRule):
     exported = False
     mapping = grammarCfg.cmd.map
@@ -550,7 +577,6 @@ alternatives = []
 alternatives.append(RuleRef(rule=KeystrokeRule()))
 single_action = Alternative(alternatives)
 
-
 sequence = Repetition(single_action, min=1, max=16, name="sequence")
 
 
@@ -572,6 +598,7 @@ class RepeatRule(CompoundRule):
             for action in sequence:
                 action.execute()
         release.execute()
+
 
 grammar = Grammar("Generic edit", context=None)
 grammar.add_rule(RepeatRule())  # Add the top-level rule.
