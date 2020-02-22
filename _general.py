@@ -455,7 +455,6 @@ grammarCfg.cmd.map = Item(
         "new command": Key("end, enter") + Text("\"command\": action,") + Key("left:10, shift:down, left:7, shift:up"),
         "action action": Text("Key(\"\")") + Key("left:2"),
         "action": Key("c-f"),
-        "Hans Wurst": Key("H"),
         "(next|new) line": Key("end, enter"),
         "commit <text>": Function(commit),
 
