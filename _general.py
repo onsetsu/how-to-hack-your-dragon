@@ -6,6 +6,9 @@ http://dragonfly-modules.googlecode.com/svn/trunk/command-modules/documentation/
 Licensed under the LGPL, see http://www.gnu.org/licenses/
 
 """
+
+print "Updated _general.py"
+
 from natlink import setMicState
 from dragonfly import (
     # Clipboard,
@@ -367,8 +370,6 @@ def paste_command():
     release.execute()
     Key("c-v/3").execute()
 
-
-print "Start _general.py"
 
 def hilda(args):
     print "Hallo Welt"
