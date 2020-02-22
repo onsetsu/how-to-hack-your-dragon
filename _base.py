@@ -14,8 +14,8 @@ from dragonfly import (
 base_rule = MappingRule(
     mapping={
         "safe": Key("c-s"),
-        "reload": Key("home/10, home"),
-        "update": Key("c-s/30, home/10, home"),
+        "update": Key("home/10, home"),
+        "reload": Key("c-s/30, home/10, home"),
     },
     extras=[
         IntegerRef("n", 1, 100),

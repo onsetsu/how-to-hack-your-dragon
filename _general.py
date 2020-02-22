@@ -371,11 +371,6 @@ def paste_command():
     Key("c-v/3").execute()
 
 
-def hilda(args):
-    print "Hallo Welt"
-    print args
-
-
 from dragonfly.windows.clipboard import Clipboard
 
 
@@ -406,9 +401,6 @@ def select_next(pressKey="("):
         print 'END'
 
 
-grammarCfg = Config("multi edit")
-grammarCfg.cmd = Section("Language section")
-
 
 def commit(text="No Message"):
     print "commit"+text
@@ -419,13 +411,22 @@ def commit(text="No Message"):
 
 
 
+grammarCfg = Config("multi edit")
+grammarCfg.cmd = Section("Language section")
 grammarCfg.cmd.map = Item(
     {
         # keys
         "<pressKey>": Key("%(pressKey)s"),
+
         "shock": Key("enter"),
         "hash": Key("#"),
-        "menu": Key("s-f10"),
+        "menu|context": Key("s-f10"),
+
+        "pipe": Key("|"),
+        "double": Key("\""),
+        "single": Key("\'"),
+
+        # code navigation
         "goto <pressKey>": Function(select_next),
 
         "(auf|hoch) [<n>]|[<n>] (auf|hoch)": Key("up:%(n)d"),
@@ -433,10 +434,7 @@ grammarCfg.cmd.map = Item(
         "rechts [<n>]|[<n>] rechts": Key("right:%(n)d"),
         "links [<n>]|[<n>] links": Key("left:%(n)d"),
 
-        "pipe": Key("|"),
-        "double": Key("\""),
-        "single": Key("\'"),
-
+        # copy & paste
         "copy": Key("c-c"),
         "paste|Pest|Waste": Key("c-v"),
 
@@ -458,9 +456,7 @@ grammarCfg.cmd.map = Item(
         "(next|new) line": Key("end, enter"),
         "commit <text>": Function(commit),
 
-        "Hilda": Key("F") + Function(hilda),
         "Kommen|Kommend|comment": Key("c-slash"),
-        "Eintopf": Function(select_next),
 
         "anchor front": Key("s-home"),
         "anchor back": Key("s-end"),
