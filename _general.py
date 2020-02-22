@@ -411,9 +411,10 @@ grammarCfg.cmd = Section("Language section")
 
 def commit(text="No Message"):
     print "commit"+text
-    Key("c-k/250").execute()
+    Key("c-k/400").execute()
     Text(text).execute()
-    Key("ca-k").execute()
+    Key("ca-k/400").execute()
+    Key("a-p").execute()
 
 
 
