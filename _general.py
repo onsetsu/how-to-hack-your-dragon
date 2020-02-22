@@ -457,7 +457,7 @@ grammarCfg.cmd.map = Item(
         "action": Key("c-f"),
         "Hans Wurst": Key("H"),
         "(next|new) line": Key("end, enter"),
-        "commit [<text>]": Function(commit),
+        "commit <text>": Function(commit),
 
         "Hilda": Key("F") + Function(hilda),
         "Kommen|Kommend|comment": Key("c-slash"),
