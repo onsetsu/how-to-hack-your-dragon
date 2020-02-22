@@ -407,6 +407,15 @@ def select_next(pressKey="("):
 
 grammarCfg = Config("multi edit")
 grammarCfg.cmd = Section("Language section")
+
+
+def commit(text="No Message"):
+    print "commit"+text
+    Key("c-k/250").execute()
+    Text(text).execute()
+    Key("ca-k").execute()
+
+
 grammarCfg.cmd.map = Item(
     {
         # keys
@@ -414,7 +423,7 @@ grammarCfg.cmd.map = Item(
         "shock": Key("enter"),
         "hash": Key("#"),
         "menu": Key("s-f10"),
-        "next <pressKey>": Function(select_next),
+        "goto <pressKey>": Function(select_next),
 
         "(auf|hoch) [<n>]|[<n>] (auf|hoch)": Key("up:%(n)d"),
         "(runter|ab) [<n>]|[<n>] (runter|ab)": Key("down:%(n)d"),
@@ -445,6 +454,7 @@ grammarCfg.cmd.map = Item(
         "action": Key("c-f"),
         "Hans Wurst": Key("H"),
         "(next|new) line": Key("end, enter"),
+        "commit [<text>]": Function(commit),
 
         "Hilda": Key("F") + Function(hilda),
         "Kommen|Kommend|comment": Key("c-slash"),
