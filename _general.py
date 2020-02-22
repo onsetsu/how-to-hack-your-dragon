@@ -370,7 +370,6 @@ def paste_command():
 
 print "Start _general.py"
 
-
 def hilda(args):
     print "Hallo Welt"
     print args
@@ -388,12 +387,11 @@ def current_selection():
     return sel_text
 
 
-def select_next(text=None, text2=None):
+def select_next(pressKey="("):
     try:
-        target = '('
         Key('cs-end').execute()
-        sel_text = current_selection()
-        idx = sel_text.find(target)
+        sel_text = current_selection().lower()
+        idx = sel_text.find(pressKey)
         print 'sel:' + str(idx) + ':'
         Key("left").execute()
         if idx >= 0:
@@ -412,9 +410,11 @@ grammarCfg.cmd = Section("Language section")
 grammarCfg.cmd.map = Item(
     {
         # keys
+        "<pressKey>": Key("%(pressKey)s"),
         "shock": Key("enter"),
         "hash": Key("#"),
         "menu": Key("s-f10"),
+        "next <pressKey>": Function(select_next),
 
         "(auf|hoch) [<n>]|[<n>] (auf|hoch)": Key("up:%(n)d"),
         "(runter|ab) [<n>]|[<n>] (runter|ab)": Key("down:%(n)d"),
