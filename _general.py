@@ -450,9 +450,10 @@ grammarCfg.cmd.map = Item(
         "lab": Key("a-tab"),
 
         # pycharm support
-        "new command": Key("end, enter") + Text("\"command\": action,") + Key("left:10, shift:down, left:7, shift:up"),
-        "action action": Text("Key(\"\")") + Key("left:2"),
-        "action": Key("c-f"),
+        "new command|Newcomer": Key("end, enter") + Text("\"command\": action,") + Key("left:10, shift:down, left:7, shift:up"),
+        "action": Key("end, left, s-left:6"),
+        "Key": Text("Key(\"\")") + Key("left:2"),
+        "Text [<text>]": Text("Text(\"\")") + Key("left:2") + Text("%(text)s"),
         "(next|new) line": Key("end, enter"),
         "commit <text>": Function(commit),
 
