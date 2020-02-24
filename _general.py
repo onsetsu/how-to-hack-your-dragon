@@ -457,6 +457,12 @@ grammarCfg.cmd.map = Item(
         "Text [<text>]": Text("Text(\"\")") + Key("left:2") + Text("%(text)s"),
         "(next|new) line": Key("end, enter"),
         "commit <text>": Function(commit),
+        "Nummer Ein": Text("[<n>]"),
+
+        # Firefox Support
+        "last tab": Key("c-tab"),
+        "Linker Tab [<n>]": Key("c-pageup:%(n)d"),
+        "Rechter Tab [<n>]": Key("c-pagedown:%(n)d"),
 
         "Kommen|Kommend|comment": Key("c-slash"),
 
@@ -554,10 +560,6 @@ grammarCfg.cmd.map = Item(
         "[<text>] (go to sleep|cancel and sleep) [<text2>]": Function(cancel_and_sleep),  # @IgnorePep8
         # Reload Natlink.
         "reload Natlink": Function(reload_natlink),
-        "Nummer Ein": Text("[<n>]"),
-        "last tab": Key("c-tab"),
-        "(Linker Tab|tab links|links tab) [<n>]": Key("c-pageup:%(n)d"),
-        "(Rechter Tab|tab rechts|rechts tab|Kreuth) [<n>]": Key("c-pagedown:%(n)d"),
     },
     namespace={
         "Key": Key,
