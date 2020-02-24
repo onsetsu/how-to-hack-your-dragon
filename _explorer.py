@@ -415,145 +415,8 @@ grammarCfg = Config("multi edit")
 grammarCfg.cmd = Section("Language section")
 grammarCfg.cmd.map = Item(
     {
-        # keys
-        "<pressKey>": Key("%(pressKey)s"),
-
-        "shock": Key("enter"),
-        "hash": Key("#"),
-        "menu|context": Key("s-f10"),
-
-        "pipe": Key("|"),
-        "double": Key("\""),
-        "single": Key("\'"),
-
-        # code navigation
-        "goto <pressKey>": Function(select_next),
-
-        "(auf|hoch) [<n>]|[<n>] (auf|hoch)": Key("up:%(n)d"),
-        "(Unter|runter|ab) [<n>]|[<n>] (runter|ab)": Key("down:%(n)d"),
-        "rechts [<n>]|[<n>] rechts": Key("right:%(n)d"),
-        "links [<n>]|[<n>] links": Key("left:%(n)d"),
-
-        # copy & paste
-        "copy": Key("c-c"),
-        "paste|Pest|Waste": Key("c-v"),
-
-        # Undo support
-        "undo [<n>]": Key("c-z:%(n)d"),
-        "redo [<n>]": Key("c-y:%(n)d"),
-
-        "find": Key("c-f"),
-
-        "open": Key("c-o"),
-
-        # window management
-        "lab|last app": Key("a-tab"),
-
-        # pycharm support
-        "Margin|Martin": Key("up:10, down:10"),
-        "new command|Newcomer": Key("end, enter") + Text("\"command\": action,") + Key("left:10, shift:down, left:7, shift:up"),
-        "action": Key("end, left, s-left:6"),
-        "Key": Text("Key(\"\")") + Key("left:2"),
-        "Text [<text>]": Text("Text(\"\")") + Key("left:2") + Text("%(text)s"),
-        "(next|new) line": Key("end, enter"),
-        "commit <text>": Function(commit),
-
-        "Kommen|Kommend|comment": Key("c-slash"),
-
-        "anchor front": Key("s-home"),
-        "anchor back": Key("s-end"),
-
-        # Navigation keys.
-        "up [<n>]": Key("up:%(n)d"),
-        "up [<n>] slow": Key("up/15:%(n)d"),
-        "down [<n>]": Key("down:%(n)d"),
-        "down [<n>] slow": Key("down/15:%(n)d"),
-        "left [<n>]": Key("left:%(n)d"),
-        "left [<n>] slow": Key("left/15:%(n)d"),
-        "right [<n>]": Key("right:%(n)d"),
-        "right [<n>] slow": Key("right/15:%(n)d"),
-        "page up [<n>]": Key("pgup:%(n)d"),
-        "page down [<n>]": Key("pgdown:%(n)d"),
-        "up <n> (page|pages)": Key("pgup:%(n)d"),
-        "down <n> (page|pages)": Key("pgdown:%(n)d"),
-        "left <n> (word|words)": Key("c-left/3:%(n)d/10"),
-        "right <n> (word|words)": Key("c-right/3:%(n)d/10"),
-        "home": Key("home"),
-        "end": Key("end"),
-        "doc home": Key("c-home/3"),
-        "doc end": Key("c-end/3"),
-        # Functional keys.
-        "space": release + Key("space"),
-        "space [<n>]": release + Key("space:%(n)d"),
-        "enter [<n>]": release + Key("enter:%(n)d"),
-        "tab [<n>]": Key("tab:%(n)d"),
-        "delete [<n>]": Key("del/3:%(n)d"),
-        "delete [this] line": Key("home, s-end, del"),  # @IgnorePep8
-        "backspace [<n>]": release + Key("backspace:%(n)d"),
-        "application key": release + Key("apps/3"),
-        "win key": release + Key("win/3"),
-        "paste [that]": Function(paste_command),
-        "copy [that]": Function(copy_command),
-        "cut [that]": release + Key("c-x/3"),
-        "select all": release + Key("c-a/3"),
-        "undo": release + Key("c-z/3"),
-        "undo <n> [times]": release + Key("c-z/3:%(n)d"),
-        "redo": release + Key("c-y/3"),
-        "redo <n> [times]": release + Key("c-y/3:%(n)d"),
-        "[(hold|press)] alt": Key("alt:down/3"),
-        "release alt": Key("alt:up"),
-        "[(hold|press)] shift": Key("shift:down/3"),
-        "release shift": Key("shift:up"),
-        "[(hold|press)] control": Key("ctrl:down/3"),
-        "release control": Key("ctrl:up"),
-        "release [all]": release,
-        # Closures.
-        "angle brackets": Key("langle, rangle, left/3"),
-        "brackets": Key("lbracket, rbracket, left/3"),
-        "braces": Key("lbrace, rbrace, left/3"),
-        "parens": Key("lparen, rparen, left/3"),
-        "quotes": Key("dquote/3, dquote/3, left/3"),
-        "single quotes": Key("squote, squote, left/3"),
-        # Shorthand multiple characters.
-        "double <char>": Text("%(char)s%(char)s"),
-        "triple <char>": Text("%(char)s%(char)s%(char)s"),
-        "double escape": Key("escape, escape"),  # Exiting menus.
-        # Punctuation and separation characters, for quick editing.
-        "colon [<n>]": Key("colon/2:%(n)d"),
-        "semi-colon [<n>]": Key("semicolon/2:%(n)d"),
-        "comma [<n>]": Key("comma/2:%(n)d"),
-        "(dot|period) [<n>]": Key("dot/2:%(n)d"),
-        "(dash|hyphen|minus) [<n>]": Key("hyphen/2:%(n)d"),
-        "underscore [<n>]": Key("underscore/2:%(n)d"),
-        # To release keyboard capture by VirtualBox.
-        "press right control": Key("Control_R"),
-        # Formatting <n> words to the left of the cursor.
-        "camel case <n> [words]": Function(camel_case_count),
-        "pascal case <n> [words]": Function(pascal_case_count),
-        "snake case <n> [words]": Function(snake_case_count),
-        "squash <n> [words]": Function(squash_count),
-        "expand <n> [words]": Function(expand_count),
-        "uppercase <n> [words]": Function(uppercase_count),
-        "lowercase <n> [words]": Function(lowercase_count),
-        # Format dictated words. See the formatMap for all available types.
-        # Ex: "camel case my new variable" -> "myNewVariable"
-        # Ex: "snake case my new variable" -> "my_new_variable"
-        # Ex: "uppercase squash my new hyphen variable" -> "MYNEW-VARIABLE"
-        "<formatType> <text>": Function(format_text),
-        # For writing words that would otherwise be characters or commands.
-        # Ex: "period", tab", "left", "right", "home".
-        "say <reservedWord>": Text("%(reservedWord)s"),
-        # Abbreviate words commonly used in programming.
-        # Ex: arguments -> args, parameters -> params.
-        "abbreviate <abbreviation>": Text("%(abbreviation)s"),
-        # Text corrections.
-        "(add|fix) missing space": Key("c-left/3, space, c-right/3"),
-        "(delete|remove) (double|extra) (space|whitespace)": Key("c-left/3, backspace, c-right/3"),  # @IgnorePep8
-        "(delete|remove) (double|extra) (type|char|character)": Key("c-left/3, del, c-right/3"),  # @IgnorePep8
-        # Microphone sleep/cancel started dictation.
-        "[<text>] (go to sleep|cancel and sleep) [<text2>]": Function(cancel_and_sleep),  # @IgnorePep8
-        # Reload Natlink.
-        "reload Natlink": Function(reload_natlink),
+        # Explorer
+        "Hans": Key("right:2"),
     },
     namespace={
         "Key": Key,
@@ -609,8 +472,8 @@ class RepeatRule(CompoundRule):
                 action.execute()
         release.execute()
 
-
-grammar = Grammar("Generic edit", context=None)
+# c = AppContext()
+grammar = Grammar("Explorer", context=None)
 grammar.add_rule(RepeatRule())  # Add the top-level rule.
 grammar.load()  # Load the grammar.
 
