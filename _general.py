@@ -430,7 +430,7 @@ grammarCfg.cmd.map = Item(
         "goto <pressKey>": Function(select_next),
 
         "(auf|hoch) [<n>]|[<n>] (auf|hoch)": Key("up:%(n)d"),
-        "(Unter|runter|ab) [<n>]|[<n>] (runter|ab)": Key("down:%(n)d"),
+        "(Unter|runter|ab) [<n>]|[<n>] (Unter|runter|ab)": Key("down:%(n)d"),
         "rechts [<n>]|[<n>] rechts": Key("right:%(n)d"),
         "links [<n>]|[<n>] links": Key("left:%(n)d"),
 
@@ -450,7 +450,7 @@ grammarCfg.cmd.map = Item(
         "lab|last app": Key("a-tab"),
 
         # pycharm support
-        "Margin|Martin": Key("up:10, down:10"),
+        "Margin|Martin": Key("up:10, down:10, down:10, up:10"),
         "new command|Newcomer": Key("end, enter") + Text("\"command\": action,") + Key("left:10, shift:down, left:7, shift:up"),
         "action": Key("end, left, s-left:6"),
         "Key": Text("Key(\"\")") + Key("left:2"),
@@ -554,6 +554,10 @@ grammarCfg.cmd.map = Item(
         "[<text>] (go to sleep|cancel and sleep) [<text2>]": Function(cancel_and_sleep),  # @IgnorePep8
         # Reload Natlink.
         "reload Natlink": Function(reload_natlink),
+        "Nummer Ein": Text("[<n>]"),
+        "last tab": Key("c-tab"),
+        "(Linker Tab|tab links|links tab) [<n>]": Key("c-pageup:%(n)d"),
+        "(Rechter Tab|tab rechts|rechts tab|Kreuth) [<n>]": Key("c-pagedown:%(n)d"),
     },
     namespace={
         "Key": Key,
