@@ -442,7 +442,7 @@ grammarCfg.cmd.map = Item(
         "undo [<n>]": Key("c-z:%(n)d"),
         "redo [<n>]": Key("c-y:%(n)d"),
 
-        "find": Key("c-f"),
+        "find|Feind": Key("c-f"),
 
         "open": Key("c-o"),
 
@@ -463,6 +463,15 @@ grammarCfg.cmd.map = Item(
         "last tab": Key("c-tab"),
         "Linker Tab [<n>]": Key("c-pageup:%(n)d"),
         "Rechter Tab [<n>]": Key("c-pagedown:%(n)d"),
+
+        # Trello Support
+        "Highlight": Key(" 1 "),
+        "Spieker|Zwicker|Speaker": Key(" 2 "),
+        "Critical": Key(" 4 "),
+        "Dagstuhl": Key(" 5 "),
+        "Proceedings": Key("7"),
+        "Workshop": Key("8"),
+        "Orga": Key("0"),
 
         "Kommen|Kommend|comment": Key("c-slash"),
 

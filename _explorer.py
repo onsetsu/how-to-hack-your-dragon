@@ -416,7 +416,9 @@ grammarCfg.cmd = Section("Language section")
 grammarCfg.cmd.map = Item(
     {
         # Explorer
-        "Hans": Key("right:2"),
+        "parent": Key("a-up"),
+        "(Neuer Ordner|Neuordnung|Neuer Ordnung) [<text>]": Key("sc-n: 30 ")+Text("%(text)s")+Key("enter"),
+        "Umbenennen": Key("s-f10, m"),
     },
     namespace={
         "Key": Key,
@@ -472,8 +474,11 @@ class RepeatRule(CompoundRule):
                 action.execute()
         release.execute()
 
-# c = AppContext()
-grammar = Grammar("Explorer", context=None)
+firefox_context = AppContext(executable="Explorer")
+reader_context = AppContext(executable="firefox", title="Trello")
+firefox_but_not_reader_context = firefox_context & ~reader_context
+c = AppContext()
+grammar = Grammar("Explorer", context=firefox_but_not_reader_context)
 grammar.add_rule(RepeatRule())  # Add the top-level rule.
 grammar.load()  # Load the grammar.
 
