@@ -394,21 +394,19 @@ def select_next(pressKey="("):
             Key("right:%(i)d" % {"i": idx}).execute()
         sound.play(sound.SND_ACTIVATE)
     except StandardError as e:
-        print 'ERROR'+ e
+        print 'ERROR' + e
     else:
         print 'SUCCESS!'
     finally:
         print 'END'
 
 
-
 def commit(text="No Message"):
-    print "commit"+text
+    print "commit" + text
     Key("c-k/400").execute()
     Text(text).execute()
     Key("ca-k/400").execute()
     Key("a-p").execute()
-
 
 
 grammarCfg = Config("multi edit")
@@ -417,7 +415,7 @@ grammarCfg.cmd.map = Item(
     {
         # Explorer
         "parent": Key("a-up"),
-        "(Neuer Ordner|Neuordnung|Neuer Ordnung) [<text>]": Key("sc-n: 30 ")+Text("%(text)s")+Key("enter"),
+        "(Neuer Ordner|Neuordnung|Neuer Ordnung) [<text>]": Key("sc-n: 30 ") + Text("%(text)s") + Key("enter"),
         "Umbenennen": Key("s-f10, m"),
     },
     namespace={
@@ -474,11 +472,9 @@ class RepeatRule(CompoundRule):
                 action.execute()
         release.execute()
 
-firefox_context = AppContext(executable="Explorer")
-reader_context = AppContext(executable="firefox", title="Trello")
-firefox_but_not_reader_context = firefox_context & ~reader_context
-c = AppContext()
-grammar = Grammar("Explorer", context=firefox_but_not_reader_context)
+
+explorer_context = AppContext(executable="Explorer")
+grammar = Grammar("Explorer", context=explorer_context)
 grammar.add_rule(RepeatRule())  # Add the top-level rule.
 grammar.load()  # Load the grammar.
 
