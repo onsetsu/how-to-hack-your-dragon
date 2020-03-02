@@ -1,3 +1,4 @@
+# coding=utf-8
 """A command module for Dragonfly, for generic editing help.
 
 -----------------------------------------------------------------------------
@@ -436,7 +437,7 @@ grammarCfg.cmd.map = Item(
 
         # copy & paste
         "copy": Key("c-c"),
-        "paste|Pest|Waste": Key("c-v"),
+        "paste|Pest|Waste|Einfuegen": Key("c-v"),
 
         # Undo support
         "undo [<n>]": Key("c-z:%(n)d"),
@@ -457,7 +458,25 @@ grammarCfg.cmd.map = Item(
         "Text [<text>]": Text("Text(\"\")") + Key("left:2") + Text("%(text)s"),
         "(next|new) line": Key("end, enter"),
         "commit <text>": Function(commit),
-        "Nummer Ein": Text("[<n>]"),
+        "Integer|In Thatcher|Intimer|Intercharter|Indischer|In deutscher": Text(" [<n>]"),
+        "(Neben|Nimm) (Integer|In Thatcher|Intimer|Intercharter|Indischer|In deutscher)": Text("%%(n)d"),
+        
+        "(Rund|Und) auf": Key("lparen"),
+        "Rund zu": Key("rparen"),
+        "Eckig auf": Key("lbracket"),
+        "Eckig zu": Key("rbracket"),
+        "Geschweift auf": Key("lbrace"),
+        "Geschweift zu": Key("rbrace"),
+        "Spitz auf": Key("lessthan"),
+        "Spitz Zu": Key("greaterthan"),
+
+        "expand selection [<n>]": Key("c-w:%(n)d"),
+        "shrink selection [<n>]": Key("cs-w:%(n)d"),
+
+        "line [<n>]": Key("c-g/20")+Text("%(n)d")+Key("enter"),
+        "Geschichte [<n>]": Key("backspace:%(n)d"),
+        "Zukunft [<n>]": Key("delete:%(n)d"),
+        "Hallo Welt": Text("Hallo Welt!"),
 
         # Firefox Support
         "last tab": Key("c-tab"),
@@ -581,7 +600,7 @@ class KeystrokeRule(MappingRule):
     exported = False
     mapping = grammarCfg.cmd.map
     extras = [
-        IntegerRef("n", 1, 100),
+        IntegerRef("n", 1, 10000),
         Dictation("text"),
         Dictation("text2"),
         Choice("char", specialCharMap),

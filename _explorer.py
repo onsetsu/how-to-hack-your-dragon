@@ -415,8 +415,12 @@ grammarCfg.cmd.map = Item(
     {
         # Explorer
         "parent": Key("a-up"),
-        "(Neuer Ordner|Neuordnung|Neuer Ordnung) [<text>]": Key("sc-n: 30 ") + Text("%(text)s") + Key("enter"),
-        "Umbenennen": Key("s-f10, m"),
+        "(Neuer Ordner|Neuordnung|Neuer Ordnung|New Folder) <text>": Key("sc-n: 30 ") + Text("%(text)s") + Key("enter"),
+        "(Neuer Ordner|Neuordnung|Neuer Ordnung|New Folder)": Key("sc-n: 30 "),
+        "Umbenennen <text>": Key("s-f10, m:2, enter") + Text("%(text)s") + Key("enter"),
+        "Umbenennen": Key("s-f10, m:2, enter"),
+        "midterm": Key("sc-n: 30 ") + Text("midterm") + Key("enter"),
+        "endterm": Key("sc-n: 30 ") + Text("endterm") + Key("enter"),
     },
     namespace={
         "Key": Key,
